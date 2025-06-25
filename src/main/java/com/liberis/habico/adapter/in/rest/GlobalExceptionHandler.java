@@ -62,19 +62,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // You can add more @ExceptionHandler methods for other exceptions (e.g., ResourceNotFoundException)
-    // @ExceptionHandler(YourCustomNotFoundException.class)
-    // public ResponseEntity<Object> handleYourCustomNotFoundException(YourCustomNotFoundException ex, WebRequest request) {
-    //     String path = ((ServletWebRequest) request).getRequest().getRequestURI();
-    //     ErrorResponse errorResponse = new ErrorResponse(
-    //             HttpStatus.NOT_FOUND.value(),
-    //             HttpStatus.NOT_FOUND.getReasonPhrase(),
-    //             ex.getMessage(),
-    //             path
-    //     );
-    //     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    // }
-
     // A fallback for any other unhandled exceptions
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
