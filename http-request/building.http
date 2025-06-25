@@ -1,0 +1,20 @@
+### GET request to example server
+POST localhost:8082/v1/habico/building
+Content-Type: application/json
+Accept: application/json
+
+{
+  "buildingName": "Kevin",
+  "active": false,
+  "status": "UNSTARTED",
+  "address": {
+    "street": "Simon Str.",
+    "streetNumber": "54 a",
+    "city": "Fürth",
+    "state": "Bayern",
+    "zipcode": "90876",
+    "country": "DE"
+  }
+}
+
+###

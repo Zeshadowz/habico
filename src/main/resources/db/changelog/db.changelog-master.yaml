@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: sql/habico.0.0.1.sql
+      relativeToChangelogFile: true

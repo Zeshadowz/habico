@@ -1,0 +1,9 @@
+# SPRING
+server:
+  port: 8082
+  servlet:
+    context-path: /v1/habico
+
+spring:
+  profiles:
+    active: ${ACTIVE_SPRING_PROFILE:dev}
