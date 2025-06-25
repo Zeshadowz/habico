@@ -1,6 +1,5 @@
 package com.liberis.habico.adapter.in.rest.dto;
 
-import com.liberis.habico.domain.model.Building;
 import com.liberis.habico.domain.model.SaleStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,6 @@ public class UnitResponse {
     private SaleStatus status;
     private LocalDate saleSart;
     private LocalDate saleEnd;
-    private Building building; // Reference to the parent Building
     private boolean parentAddress;
     private AddressResponse address;
 }

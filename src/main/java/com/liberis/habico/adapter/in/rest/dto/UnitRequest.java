@@ -1,6 +1,5 @@
 package com.liberis.habico.adapter.in.rest.dto;
 
-import com.liberis.habico.domain.model.Building;
 import com.liberis.habico.domain.model.SaleStatus;
 import lombok.*;
 
@@ -16,7 +15,6 @@ public class UnitRequest {
     private SaleStatus status;
     private LocalDate saleSart;
     private LocalDate saleEnd;
-    private Building building; // Reference to the parent Building
     private boolean parentAddress;
     private AddressRequest address;
 }
