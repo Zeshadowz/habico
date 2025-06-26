@@ -17,9 +17,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class UnitEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private LocalDate saleSart;
+    private LocalDate saleStart;
     private LocalDate saleEnd;
     private String designation;
 

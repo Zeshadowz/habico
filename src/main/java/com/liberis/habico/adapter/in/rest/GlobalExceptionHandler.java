@@ -2,6 +2,7 @@ package com.liberis.habico.adapter.in.rest;
 
 import com.liberis.habico.adapter.in.rest.error.ErrorDetail;
 import com.liberis.habico.adapter.in.rest.error.ErrorResponse;
+import com.liberis.habico.common.exception.DuplicateResourceException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -60,6 +61,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    // A fallback for any other unhandled exceptions
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<Object> handleDuplicateExceptions(Exception ex, WebRequest request) {
+        ErrorResponse errorResponse = buildErrorResponse(HttpStatus.CONFLICT, request,
+                "An unexpected error occurred: " + ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     // A fallback for any other unhandled exceptions
