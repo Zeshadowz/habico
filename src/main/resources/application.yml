@@ -7,3 +7,6 @@ server:
 spring:
   profiles:
     active: ${ACTIVE_SPRING_PROFILE:dev}
+  sql:
+    init:
+      mode: always

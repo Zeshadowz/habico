@@ -3,10 +3,10 @@ package com.liberis.habico.app.usecase;
 import com.liberis.habico.adapter.in.rest.dto.BuildingRequest;
 import com.liberis.habico.adapter.in.rest.dto.BuildingResponse;
 import com.liberis.habico.app.mapper.BuildingMapper;
+import com.liberis.habico.common.exception.DuplicateResourceException;
 import com.liberis.habico.domain.model.Building;
 import com.liberis.habico.domain.service.BuildingService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,11 +18,11 @@ public class CreateBuildingUsecase {
 
     public BuildingResponse createBuilding(BuildingRequest buildingRequest) {
         if (null != buildingService.findBuildingByName(buildingRequest.getName())) {
-            throw new DataIntegrityViolationException(buildingRequest.getName() + " already exists");
+            throw new DuplicateResourceException(buildingRequest.getName() + " already exists");
         }
 
         if (null != buildingService.findBuildingByCode(buildingRequest.getCode())) {
-            throw new DataIntegrityViolationException(buildingRequest.getCode() + " already exists");
+            throw new DuplicateResourceException(buildingRequest.getCode() + " already exists");
         }
 
         // TODO: Add check same address. Two buildings cannot have the same address

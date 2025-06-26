@@ -15,7 +15,7 @@ import lombok.Setter;
 public class AddressEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String street;
     private String streetNumber;
@@ -24,7 +24,4 @@ public class AddressEntity {
     private String state;
     private String zipcode;
     private String country;
-
-    // @OneToOne(cascade = CascadeType.ALL)
-    //private BuildingEntity building;
 }

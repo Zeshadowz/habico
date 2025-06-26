@@ -2,6 +2,7 @@ package com.liberis.habico.adapter.in.rest;
 
 import com.liberis.habico.adapter.in.rest.error.ErrorDetail;
 import com.liberis.habico.adapter.in.rest.error.ErrorResponse;
+import com.liberis.habico.common.exception.DuplicateResourceException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -62,18 +63,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    // You can add more @ExceptionHandler methods for other exceptions (e.g., ResourceNotFoundException)
-    // @ExceptionHandler(YourCustomNotFoundException.class)
-    // public ResponseEntity<Object> handleYourCustomNotFoundException(YourCustomNotFoundException ex, WebRequest request) {
-    //     String path = ((ServletWebRequest) request).getRequest().getRequestURI();
-    //     ErrorResponse errorResponse = new ErrorResponse(
-    //             HttpStatus.NOT_FOUND.value(),
-    //             HttpStatus.NOT_FOUND.getReasonPhrase(),
-    //             ex.getMessage(),
-    //             path
-    //     );
-    //     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    // }
+    // A fallback for any other unhandled exceptions
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<Object> handleDuplicateExceptions(Exception ex, WebRequest request) {
+        ErrorResponse errorResponse = buildErrorResponse(HttpStatus.CONFLICT, request,
+                "An unexpected error occurred: " + ex.getMessage(),
+                null
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
     // A fallback for any other unhandled exceptions
     @ExceptionHandler(Exception.class)

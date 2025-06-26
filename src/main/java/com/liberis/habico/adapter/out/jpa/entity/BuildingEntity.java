@@ -20,7 +20,7 @@ import java.util.List;
 public class BuildingEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
     private String code;
