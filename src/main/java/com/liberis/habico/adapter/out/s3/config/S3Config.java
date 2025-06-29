@@ -1,6 +1,5 @@
 package com.liberis.habico.adapter.out.s3.config;
 
-import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -28,14 +27,6 @@ public class S3Config {
     @Value("${aws.s3.region}")
     private String region;
 
-    @Bean
-    public MinioClient minioClient() {
-        return MinioClient.builder()
-                .endpoint(endpointUrl)
-                .credentials(accessKey, secretKey)
-                .region(region)
-                .build();
-    }
 
     @Bean
     public S3Client s3Client() {

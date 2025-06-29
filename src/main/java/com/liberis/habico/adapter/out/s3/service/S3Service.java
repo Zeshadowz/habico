@@ -1,8 +1,7 @@
 package com.liberis.habico.adapter.out.s3.service;
 
-import io.minio.MinioClient;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,30 +14,22 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3Service {
 
-    private final MinioClient minioClient;
     private final S3Client s3Client;
 
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
-
-    @PostConstruct
-    public void init() {
-        try {
-            s3Client.createBucket(CreateBucketRequest.builder().bucket(bucketName).build());
-        } catch (BucketAlreadyOwnedByYouException ignored) {
-        }
-    }
 
     public String uploadFile(String keyName, MultipartFile file) throws IOException {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucketName)
                 .key(keyName)
                 .build();
-        PutObjectResponse putObjectResponse = s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
         return keyName;
     }
