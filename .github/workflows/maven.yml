@@ -11,6 +11,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      s3-mock:
+        image: findify/s3-mock:latest
+        ports:
+          - "8001:8001"
+          - "9000:9000"
+        # Weitere Konfigurationen, z.B. health-check, falls dein Mock dies unterstützt
+        options: >-
+          --health-cmd "curl http://localhost:9000/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -28,6 +41,18 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven- 
+
+      - name: Wait for S3 Mock to be ready # Optional, aber sehr empfehlenswert!
+        run: |
+          # Einfacher Check mit curl, passt den Port an deinen S3-Mock an
+          for i in $(seq 1 10); do
+            curl -f http://localhost:9000/health && break
+            echo "Waiting for S3 Mock to be ready... (Attempt $i)"
+            sleep 5
+          done
+          echo "S3 Mock is ready!"
+        env:
+          S3MOCK_URL: http://localhost:9000
 
       - name: Build with Maven
         run: mvn clean install -batch-mode
