@@ -18,3 +18,12 @@ spring:
 #    contexts: test
 #    drop-first: true
 #    enabled: true
+
+# S3 Configuration
+aws:
+  s3:
+    endpoint-url: http://localhost:8001
+    access-key: accessKey
+    secret-key: secretKey
+    region: eu-central-1
+    bucket-name: test-bucket
