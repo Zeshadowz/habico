@@ -13,7 +13,7 @@ jobs:
 
     services:
       s3-mock:
-        image: findify/s3-mock:latest
+        image: adobe/s3mock:latest
         ports:
           - "8001:8001"
           - "9000:9000"
